@@ -62,3 +62,5 @@ public class AES {
         return null;
     }
 }
+
+//Tomado de https://howtodoinjava.com/security/java-aes-encryption-example/
