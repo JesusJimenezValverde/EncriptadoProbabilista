@@ -1,8 +1,11 @@
+package Principal;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Random;
  
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -12,22 +15,22 @@ public class AES {
     private static SecretKeySpec secretKey;
     private static byte[] key;
  
-    public static void setKey(String myKey)
-    {
-        MessageDigest sha = null;
-        try {
-            key = myKey.getBytes("UTF-8");
-            sha = MessageDigest.getInstance("SHA-1");
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
-            secretKey = new SecretKeySpec(key, "AES");
-        }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    
+    public static void setKey(String myKey){
+    	MessageDigest sha = null;
+    	try {
+    		key = myKey.getBytes("UTF-8");
+    		sha = MessageDigest.getInstance("SHA-1");
+    		key = sha.digest(key);
+    		key = Arrays.copyOf(key, 16);
+    		secretKey = new SecretKeySpec(key, "AES");
+    	}
+    	catch (NoSuchAlgorithmException e) {
+    		e.printStackTrace();
+    	}
+    	catch (UnsupportedEncodingException e) {
+    		e.printStackTrace();
+    	}
     }
  
     public static String encrypt(String strToEncrypt, String secret)
@@ -65,102 +68,40 @@ public class AES {
     
    // ---------------------------------------- new ---------------------------------------- \\ 
     
-    public static double generarProb() {
+    public static double generarProb() { // Genera un random 
     	return Math.random();	 
     }
     
-    public static void copiarArrays(double[]origen, double[]destino) {
+    public static void copiarArrays(double[]origen, double[]destino) { // Copia los valores del origen en el destino
     	for(int elemento = 0; elemento<origen.length; elemento++) {
     		destino[elemento] = origen[elemento];
     	}
     }
     
-    public static String pruebas2(String strToDecrypt, String pKey, String[] letras, int cantidadPruebas) {
-    	
-    	double[] pActual = new double[letras.length];
-    	
-    	for(int pLetra = 0; pLetra<letras.length; pLetra++) {
-    			pActual[pLetra] = generarProb();
+    
+    public static void generarPorcentajes(double[]array) { // Genera porcentajes solo para los elementos > 0.5
+    	for(int elemento = 0; elemento < array.length; elemento++) {
+    		if(array[elemento]>(double)0.5) {
+    			array[elemento] = generarProb();
     		}
-    	
-    	double[] pAnterior = new double[letras.length];
-    	copiarArrays(pActual,pAnterior);
-    	
-    	int PruebaAct = 0;
-    	while(PruebaAct<cantidadPruebas) {
-    		if(pruebas(strToDecrypt, pKey, letras, pActual) == true) {
-    			System.out.println("Logradooooooooooop");
-    			//Cuando da positivo se generan denuevo los porcentajes, excepto los que sean menores a 0.5
-    			copiarArrays(pActual, pAnterior);
-    			for(int nuevosP = 0; nuevosP<pActual.length; nuevosP++) {
-    				if(pActual[nuevosP] > 0.5) {
-    					pActual[nuevosP] = generarProb();
-    				}
-    			}
-    		}else{
-    			//Cuando da negativo se toma el estado anterior y se generan los porcentajes denuevo
-    			if(PruebaAct == 0) {//Excepto en la primera iteracion... en esta se generan los dos arreglos denuevo
-    				System.out.println("Entro en el que hace todos denuevo");
-    		    	for(int pLetra = 0; pLetra<letras.length; pLetra++) {
-    	    			pActual[pLetra] = generarProb();
-    	    		}    				
-    			}else {
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-		    				System.out.println("-----------------------------------------------Anterior-------------------------------------------");
-		    	        	for(int letraM = 0; letraM < pActual.length; letraM++) {
-		    	        		if(pAnterior[letraM]>0.5) {
-		    	        			System.out.println("Buena -- Letra -- "+ letras[letraM]+" -- porcentaje -- "+pAnterior[letraM]);
-		    	        		}else {
-		    	        			System.out.println("-- Letra -- "+ letras[letraM]+" -- porcentaje -- "+pAnterior[letraM]);
-		    	        		}
-		    	    		}
-		    				System.out.println("-----------------------------------------------Actual-------------------------------------------");
-		    	        	for(int letraM = 0; letraM < pActual.length; letraM++) {
-		    	        		if(pAnterior[letraM]>0.5) {
-		    	        			System.out.println("Buena -- Letra -- "+ letras[letraM]+" -- porcentaje -- "+pActual[letraM]);
-		    	        		}else {
-		    	        			System.out.println("-- Letra -- "+ letras[letraM]+" -- porcentaje -- "+pActual[letraM]);
-		    	        		}
-		    	    		}
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-    	        	copiarArrays(pAnterior, pActual);
-        			for(int nuevosP = 0; nuevosP<pActual.length; nuevosP++) {
-        				if(pActual[nuevosP] > 0.5) {
-        					System.out.println("Estoy generando un nuevo porcentaje para "+"'"+letras[nuevosP]+"'");
-        					pActual[nuevosP] = generarProb();
-        				}
-        			}	
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-    				System.out.println("-----------------------------------------------Actuald-------------------------------------------");
-    	        	for(int letraM = 0; letraM < pActual.length; letraM++) {
-    	        		if(pActual[letraM]>0.5) {
-    	        			System.out.println("Buena -- Letra -- "+ letras[letraM]+" -- porcentaje -- "+pActual[letraM]);
-    	        		}else {
-    	        			System.out.println("-- Letra -- "+ letras[letraM]+" -- porcentaje -- "+pActual[letraM]);
-    	        		}
-    	        	}
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------//	
-    			}
-    		}
-    		PruebaAct++;
     	}
-    	int maxValue=0;
-
-    	for(int letraM = 1; letraM < pActual.length; letraM++) {
-    		if(pAnterior[letraM]>pAnterior[maxValue]) {
-    			System.out.println(letras[maxValue]);
+    }
+    
+    public static void generarInicio(double[]array) { // Genera porcentajes para todos los elementos del array
+    	for(int elemento = 0; elemento<array.length; elemento++) {
+			array[elemento] = generarProb();
+    	}
+    }
+    
+    public static int verificarPorcentajes(double[]array) { // Saca el campo con mayor porcentaje
+    	int maxValue = 0;
+    	for(int letraM = 1; letraM < array.length; letraM++) {
+    		if(array[letraM]>array[maxValue]) {
     			maxValue = letraM;
     		}
     	}
-    	return letras[maxValue];
+    	return maxValue;
     }
-    
     
     public static boolean pruebas(String strToDecrypt, String key, String[] letras, double[] porcentajes) {
 
@@ -169,12 +110,9 @@ public class AES {
 	    		for(int numero = 0; numero < 10; numero++) {
 	    			String actual = key;
 	    			actual = key.replaceFirst("_", letras[letra]);
-	    			//System.out.println("Llave actual: "+actual);
 	    			actual = actual.replace("_", Integer.toString(numero));
-	    			//System.out.println("Llave actual: "+actual);
 	    			String nuevo = decrypt(strToDecrypt, actual);
 	    			if(nuevo != null) {
-	    				//System.out.println("Logrado");
 	    				return true; //Se encuentra la respuesta
 	    			}
 	    		}
@@ -182,5 +120,38 @@ public class AES {
     	}
     	return false; //No se encontro la respuesta
     }
+    
+    public static String pruebas2(String strToDecrypt, String pKey, String[] letras, int cantidadPruebas) {
+    	
+    	double[] pActual = new double[letras.length];
+    	double[] pAnterior = new double[letras.length];
+    	generarInicio(pActual);
+    	copiarArrays(pActual,pAnterior);
+    	
+    	int PruebaAct = 0;
+    	while(PruebaAct<cantidadPruebas) {
+    		
+    		if(pruebas(strToDecrypt, pKey, letras, pActual) == true) {
+    			System.out.println("Logradooooooooooop");
+    			copiarArrays(pActual, pAnterior);
+    			generarPorcentajes(pActual);
+    			
+    		}else{
+    			//Cuando da negativo se toma el estado anterior y se generan los porcentajes denuevo
+    			if(PruebaAct == 0) {//Excepto en la primera iteracion... en esta se generan los dos arreglos denuevo
+    				System.out.println("Entro en el que hace todos denuevo");
+    				generarInicio(pActual);
+    			}else {
+    				copiarArrays(pAnterior, pActual);
+    				generarPorcentajes(pActual);
+    			}
+    		}
+    		PruebaAct++;
+    	}
+
+    	int maxValue = verificarPorcentajes(pAnterior);
+    	return letras[maxValue];
+    }
+}
 
 //Tomado de https://howtodoinjava.com/security/java-aes-encryption-example/
