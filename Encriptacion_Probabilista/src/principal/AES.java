@@ -8,11 +8,21 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
+/** 
+ * This class is the one that contains the methods to encrypt and decrypt information.<br>
+ * This one is in charge of generate the secret keys AES uses in the process.
+ */
 public class AES {
 
   private static SecretKeySpec secretKey;
   private static byte[] key;
 
+    /**
+   * This method is the one used by the algorithm of decryption <br>
+   * and encryption to make the string given by the user into a <br>
+   * byte key.
+   * @param myKey - String
+   */
   public static void setKey(String myKey) {
     MessageDigest sha = null;
     try {
@@ -29,7 +39,15 @@ public class AES {
     }
   }
   
-  
+    /**
+   * This function is the one in charge of encrypting the information<br>
+   * given by the user. It uses "setKey" to make the string given, <br> 
+   * into a real key.
+   * @param strToEncrypt - String
+   * @param secret - String
+   * @return Null if secret was incorrect. <br>
+   * The encypted data if the function ran in the correct way. 
+   */
   public String encrypt(String strToEncrypt, String secret) {
     try {
       setKey(secret);
@@ -44,7 +62,16 @@ public class AES {
     return null;
   }
 
-  
+    /**
+   * This function is the one in charge of decrypting the information<br>
+   * given by the user. It uses "setKey" to make the string given, <br> 
+   * into a real key.
+   * @param strToDecrypt - String
+   * @param secret - String
+   * @return Null if secret was incorrect. <br>
+   * The decrypted data if the function ran in the correct way. 
+   * 
+   */
   public String decrypt(String strToDecrypt, String secret) {
     try {
       setKey(secret);
