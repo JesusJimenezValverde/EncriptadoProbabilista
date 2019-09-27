@@ -2,9 +2,6 @@ package principal;
 
 import util.Knowledge;
 
-/**
- * Class of the application that work with the AES and use class Knowledge to learn from another tests.
- */
 public class App {
   private Knowledge misProbabilidades;
   private AES codex;
@@ -33,15 +30,6 @@ public class App {
     this.codex = codex;
   }
 
-
-  /**
-   * Function to learn about what letters are necessary.
-   * 
-   * @param strToDecrypt is the encrypted String to decode.
-   * @param key is the key that decode the strToDecrypt.
-   * @param letras these are the letters to work with.
-   * @return a String that can be null if the correct key wasn't found and another String if the correct key was found.
-   */
   public String Aprendizaje(String strToDecrypt, String key, String[] letras) {
     double miProb;
     int it = 0;
@@ -78,15 +66,7 @@ public class App {
     return null;
   }
 
-  /**
-   * Function that prove the application with the present knowledge of the probabilities.
-   * For better functionality you could use this function after you used aprendizaje().
-   * 
-   * @param strToDecrypt is the encrypted String to decode.
-   * @param key these are the letters to work with.
-   * @param letras these are the letters to work with.
-   * @return a String that can be null if the correct key wasn't found and another String if the correct key was found.
-   */
+  
   public String prueba(String strToDecrypt, String key, String[] letras) {
     int it = 0;
 
@@ -104,7 +84,7 @@ public class App {
         String nuevo = getCodex().decrypt(strToDecrypt, actual);
 
         if (nuevo != null) {
-          System.out.println("Iteraciones: " + it);
+          System.out.println("Iteraciones: " + it);   //Imprime las iteraciones que le llevo.
           if (it <= 130)
             isMenorMitad++;
           logro++;
@@ -115,11 +95,7 @@ public class App {
     return null;
   }
 
-  /**
-   * This function generate a random double
-   * 
-   * @return a double, that is a probability between 0.0 and 1.0
-   */
+  
   public static double generarProbabilidad() {
     double num1 = (double) (Math.random() * 10) + 1;
     double num2 = (double) (Math.random() * 10) + num1;

@@ -8,19 +8,11 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-/**
- *Class to encrypt and decode strings using a unique key.
- */
 public class AES {
 
   private static SecretKeySpec secretKey;
   private static byte[] key;
 
-  /**
-   * This method set the secretKey in certain form, so after the key will be used to decode and encrypt strings.
-   * 
-   * @param myKey is the string that will set up to convert in a secretKey.
-   */
   public static void setKey(String myKey) {
     MessageDigest sha = null;
     try {
@@ -37,13 +29,7 @@ public class AES {
     }
   }
   
-  /**
-   * This method encrypt a String with a specific key.
-   * 
-   * @param strToEncrypt is the String that will be encrypted.
-   * @param secret is the key that encode the string and this can decode just by this key.
-   * @return the codified String of the strToEncryt.
-   */
+  
   public String encrypt(String strToEncrypt, String secret) {
     try {
       setKey(secret);
@@ -58,13 +44,7 @@ public class AES {
     return null;
   }
 
-  /**
-   * This method decode a String with a specific key.
-   * 
-   * @param strToDecrypt is the String that will be decode.
-   * @param secret is the key that decode the string.
-   * @return the decoded String of the strToDecrypt.
-   */
+  
   public String decrypt(String strToDecrypt, String secret) {
     try {
       setKey(secret);
